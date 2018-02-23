@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.asura</groupId>
+    <artifactId>asura-bom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!--commons-->
+        <commons.lang3.version>3.4</commons.lang3.version>
+        <commons.pool2.version>2.4.2</commons.pool2.version>
+        <commons.codec.version>1.10</commons.codec.version>
+        <commons.beanutils.version>1.9.2</commons.beanutils.version>
+        <!--commons end-->
+        <!--test and mock-->
+        <mock.verison>1.10.19</mock.verison>
+        <power.mock.version>1.6.5</power.mock.version>
+        <junit.version>4.12</junit.version>
+        <!--test and mock end-->
+        <!--jackson-->
+        <fasterxml.jackson.version>2.9.4</fasterxml.jackson.version>
+        <!--jackson end-->
+        <!--guava-->
+        <guava.version>19.0</guava.version>
+        <!--guava end-->
+
+        <!--plugins version-->
+        <plugin.source.version>3.0.1</plugin.source.version>
+        <plugin.compiler.version>3.5.1</plugin.compiler.version>
+        <plugin.cobertura.version>2.7</plugin.cobertura.version>
+        <plugin.surefire.version>2.19.1</plugin.surefire.version>
+        <!--jdk version-->
+        <jdk.version>1.8</jdk.version>
+        <encoding>UTF-8</encoding>
+    </properties>
+
+    <dependencies>
+        <!--*****************commons***********************-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>${commons.pool2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.codec.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons.beanutils.version}</version>
+        </dependency>
+        <!--******************commons end*******************-->
+        <!--***********************test and mock********************-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mock.verison}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${power.mock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${power.mock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--*****************test and mock end*********************-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <!--*******************json*******************-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
+        <!--*************************json end*********************-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- compiler插件, 设定JDK版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.compiler.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${encoding}</encoding>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                </configuration>
+            </plugin>
+            <!--打包携带源码插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${plugin.source.version}</version>
+                <configuration>
+                    <attach>true</attach>
+                    <excludeResources>false</excludeResources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- test插件 制定test类，与cobertura一起使用计算代码覆盖率-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${plugin.surefire.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/T_*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <!-- 单元测试覆盖 排除constant-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${plugin.cobertura.version}</version>
+                <configuration>
+                    <check>
+                        <branchRate>80</branchRate>
+                        <lineRate>80</lineRate>
+                        <haltOnFailure>80</haltOnFailure>
+                        <totalBranchRate>80</totalBranchRate>
+                        <totalLineRate>80</totalLineRate>
+                        <packageLineRate>80</packageLineRate>
+                        <packageBranchRate>80</packageBranchRate>
+                    </check>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>**/constant/*</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
