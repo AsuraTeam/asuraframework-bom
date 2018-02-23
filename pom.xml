@@ -15,20 +15,29 @@
         <commons.pool2.version>2.4.2</commons.pool2.version>
         <commons.codec.version>1.10</commons.codec.version>
         <commons.beanutils.version>1.9.2</commons.beanutils.version>
+        <cglib.version>3.2.6</cglib.version>
         <!--commons end-->
+
+        <!--code analyzers-->
+        <findbugs.version>3.0.2</findbugs.version>
+        <!--code analyzers end-->
+
         <!--test and mock-->
         <mock.verison>1.10.19</mock.verison>
         <power.mock.version>1.6.5</power.mock.version>
         <junit.version>4.12</junit.version>
         <!--test and mock end-->
+
         <!--jackson-->
         <fasterxml.jackson.version>2.9.4</fasterxml.jackson.version>
         <!--jackson end-->
+
         <!--guava-->
         <guava.version>19.0</guava.version>
         <!--guava end-->
 
         <!--plugins version-->
+        <plugin.clean.verion>3.0.0</plugin.clean.verion>
         <plugin.source.version>3.0.1</plugin.source.version>
         <plugin.compiler.version>3.5.1</plugin.compiler.version>
         <plugin.cobertura.version>2.7</plugin.cobertura.version>
@@ -60,6 +69,12 @@
             <artifactId>commons-beanutils</artifactId>
             <version>${commons.beanutils.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/cglib/cglib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
         <!--******************commons end*******************-->
         <!--***********************test and mock********************-->
         <dependency>
@@ -79,6 +94,16 @@
             <artifactId>powermock-api-mockito</artifactId>
             <version>${power.mock.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>objenesis</artifactId>
+                    <groupId>org.objenesis</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
@@ -87,6 +112,13 @@
             <scope>test</scope>
         </dependency>
         <!--*****************test and mock end*********************-->
+        <!--code analyzers-->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs.version}</version>
+        </dependency>
+        <!--code analyzers end-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -103,6 +135,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${plugin.clean.verion}</version>
+            </plugin>
             <!-- compiler插件, 设定JDK版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
