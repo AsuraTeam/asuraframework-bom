@@ -36,6 +36,8 @@
         <guava.version>19.0</guava.version>
         <!--guava end-->
 
+        <lombok.version>1.16.20</lombok.version>
+
         <!--plugins version-->
         <plugin.clean.verion>3.0.0</plugin.clean.verion>
         <plugin.source.version>3.0.1</plugin.source.version>
@@ -131,6 +133,11 @@
             <version>${fasterxml.jackson.version}</version>
         </dependency>
         <!--*************************json end*********************-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
