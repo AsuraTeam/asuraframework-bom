@@ -220,25 +220,40 @@
             </plugin>
             <!-- 单元测试覆盖 排除constant-->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${plugin.cobertura.version}</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.0</version>
                 <configuration>
-                    <check>
-                        <branchRate>80</branchRate>
-                        <lineRate>80</lineRate>
-                        <haltOnFailure>80</haltOnFailure>
-                        <totalBranchRate>80</totalBranchRate>
-                        <totalLineRate>80</totalLineRate>
-                        <packageLineRate>80</packageLineRate>
-                        <packageBranchRate>80</packageBranchRate>
-                    </check>
-                    <instrumentation>
-                        <excludes>
-                            <exclude>**/constant/*</exclude>
-                        </excludes>
-                    </instrumentation>
+                    <excludes>
+                        <exclude>**/constant/*</exclude>
+                    </excludes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>target/jacoco.exec</dataFile>
+                            <outputDirectory>target/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
