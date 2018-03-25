@@ -11,7 +11,7 @@
 
     <properties>
         <!--commons-->
-        <commons.lang3.version>3.4</commons.lang3.version>
+        <commons.lang3.version>3.7</commons.lang3.version>
         <commons.pool2.version>2.4.2</commons.pool2.version>
         <commons.codec.version>1.10</commons.codec.version>
         <commons.beanutils.version>1.9.2</commons.beanutils.version>
